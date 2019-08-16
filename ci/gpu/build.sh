@@ -43,11 +43,8 @@ nvidia-smi
 logger "Activate conda env..."
 source activate rapids
 
-logger "Add rmm/nvstrings for build..."
-conda install "rmm=$MINOR_VERSION.*" "nvstrings=$MINOR_VERSION.*"
-
-logger "Add testing packages..."
-conda install "feather-format" "cupy>=6.0.0" "hypothesis"
+logger "Update conda env with overrides from cudf_gpuci_cuda${CUDA_REL}.yml..."
+conda env update -f=$WORKSPACE/conda/environments/cudf_gpuci_cuda${CUDA_REL}.yml
 
 logger "Check versions..."
 python --version
