@@ -1,0 +1,14 @@
+name: rapids
+channels:
+- rapidsai
+- nvidia
+- rapidsai-nightly
+- numba
+- conda-forge
+- anaconda
+dependencies:
+- cupy>=6.0.0
+- feather-format
+- hypothesis
+- nvstrings=0.9.*
+- rmm=0.9.*
