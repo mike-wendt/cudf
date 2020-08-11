@@ -158,6 +158,8 @@ if buildAll || hasArg libcudf; then
           -DPER_THREAD_DEFAULT_STREAM=${BUILD_PER_THREAD_DEFAULT_STREAM} \
           -DCMAKE_BUILD_TYPE=${BUILD_TYPE} $REPODIR/cpp
     ls -la
+    cat build.ninja
+    cat rules.ninja
 fi
 
 if buildAll || hasArg libcudf; then
