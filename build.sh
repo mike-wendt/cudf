@@ -148,7 +148,8 @@ fi
 if buildAll || hasArg libcudf; then
     mkdir -p ${LIB_BUILD_DIR}
     cd ${LIB_BUILD_DIR}
-    cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
+    cmake -G Ninja \
+          -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
           -DCMAKE_CXX11_ABI=ON \
           ${GPU_ARCH} \
           -DUSE_NVTX=${BUILD_NVTX} \
@@ -162,17 +163,17 @@ if buildAll || hasArg libcudf; then
 
     cd ${LIB_BUILD_DIR}
     if [[ ${INSTALL_TARGET} != "" ]]; then
-        make -j${PARALLEL_LEVEL} install_cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} install_cudf VERBOSE=${VERBOSE}
     else
-        make -j${PARALLEL_LEVEL} cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} cudf VERBOSE=${VERBOSE}
     fi
 
     if [[ ${BUILD_TESTS} == "ON" ]]; then
-        make -j${PARALLEL_LEVEL} build_tests_cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} build_tests_cudf VERBOSE=${VERBOSE}
     fi
 
     if [[ ${BUILD_BENCHMARKS} == "ON" ]]; then
-        make -j${PARALLEL_LEVEL} build_benchmarks_cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} build_benchmarks_cudf VERBOSE=${VERBOSE}
     fi
 fi
 
@@ -203,17 +204,18 @@ fi
 if hasArg libcudf_kafka; then
     mkdir -p ${KAFKA_LIB_BUILD_DIR}
     cd ${KAFKA_LIB_BUILD_DIR}
-    cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
+    cmake -G Ninja \
+          -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} \
           -DCMAKE_BUILD_TYPE=${BUILD_TYPE} $REPODIR/cpp/libcudf_kafka
 
     if [[ ${INSTALL_TARGET} != "" ]]; then
-        make -j${PARALLEL_LEVEL} install VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} install VERBOSE=${VERBOSE}
     else
-        make -j${PARALLEL_LEVEL} libcudf_kafka VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} libcudf_kafka VERBOSE=${VERBOSE}
     fi
 
     if [[ ${BUILD_TESTS} == "ON" ]]; then
-        make -j${PARALLEL_LEVEL} build_tests_libcudf_kafka VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} build_tests_libcudf_kafka VERBOSE=${VERBOSE}
     fi
 fi
 
