@@ -92,7 +92,7 @@ fi
 
 # Process flags
 if hasArg -v; then
-    VERBOSE=1
+    VERBOSE="-v"
 fi
 if hasArg -g; then
     BUILD_TYPE=Debug
@@ -157,26 +157,23 @@ if buildAll || hasArg libcudf; then
           -DDISABLE_DEPRECATION_WARNING=${BUILD_DISABLE_DEPRECATION_WARNING} \
           -DPER_THREAD_DEFAULT_STREAM=${BUILD_PER_THREAD_DEFAULT_STREAM} \
           -DCMAKE_BUILD_TYPE=${BUILD_TYPE} $REPODIR/cpp
-    ls -la
-    cat build.ninja
-    cat rules.ninja
 fi
 
 if buildAll || hasArg libcudf; then
 
     cd ${LIB_BUILD_DIR}
     if [[ ${INSTALL_TARGET} != "" ]]; then
-        ninja -j${PARALLEL_LEVEL} install_cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} install_cudf ${VERBOSE}
     else
-        ninja -j${PARALLEL_LEVEL} cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} cudf ${VERBOSE}
     fi
 
     if [[ ${BUILD_TESTS} == "ON" ]]; then
-        ninja -j${PARALLEL_LEVEL} build_tests_cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} build_tests_cudf ${VERBOSE}
     fi
 
     if [[ ${BUILD_BENCHMARKS} == "ON" ]]; then
-        ninja -j${PARALLEL_LEVEL} build_benchmarks_cudf VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} build_benchmarks_cudf ${VERBOSE}
     fi
 fi
 
@@ -212,13 +209,13 @@ if hasArg libcudf_kafka; then
           -DCMAKE_BUILD_TYPE=${BUILD_TYPE} $REPODIR/cpp/libcudf_kafka
 
     if [[ ${INSTALL_TARGET} != "" ]]; then
-        ninja -j${PARALLEL_LEVEL} install VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} install ${VERBOSE}
     else
-        ninja -j${PARALLEL_LEVEL} libcudf_kafka VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} libcudf_kafka ${VERBOSE}
     fi
 
     if [[ ${BUILD_TESTS} == "ON" ]]; then
-        ninja -j${PARALLEL_LEVEL} build_tests_libcudf_kafka VERBOSE=${VERBOSE}
+        ninja -j${PARALLEL_LEVEL} build_tests_libcudf_kafka ${VERBOSE}
     fi
 fi
 
