@@ -157,6 +157,7 @@ if buildAll || hasArg libcudf; then
           -DDISABLE_DEPRECATION_WARNING=${BUILD_DISABLE_DEPRECATION_WARNING} \
           -DPER_THREAD_DEFAULT_STREAM=${BUILD_PER_THREAD_DEFAULT_STREAM} \
           -DCMAKE_BUILD_TYPE=${BUILD_TYPE} $REPODIR/cpp
+    ls -la
 fi
 
 if buildAll || hasArg libcudf; then
